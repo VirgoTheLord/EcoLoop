@@ -1,35 +1,78 @@
-export default function AboutPanel() {
-  return (
-    <div className="relative flex-shrink-0 w-screen h-screen flex flex-col justify-center px-20 gap-6"
-      style={{ background: "#0a0a0a", borderLeft: "1px solid rgba(255,255,255,0.06)" }}>
+"use client";
 
-      {/* Panel label */}
-      <span className="absolute top-10 left-12 text-xs tracking-[0.3em] uppercase"
-        style={{ color: "rgba(255,255,255,0.25)" }}>
+import { useRef, useCallback } from "react";
+import gsap from "gsap";
+import { SplitText } from "gsap/SplitText";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(SplitText);
+
+const aboutText =
+  "Ecoloop is built on the belief that sustainability is not a sacrifice — it is a smarter way to live.";
+
+interface Props {
+  /** Called by HorizontalLayout with dwell progress 0→1 */
+  onRegister?: (handler: (progress: number) => void) => void;
+}
+
+export default function AboutPanel({ onRegister }: Props) {
+  const panelRef  = useRef<HTMLDivElement>(null);
+  const textRef   = useRef<HTMLParagraphElement>(null);
+  const wordsRef  = useRef<Element[]>([]);
+
+  useGSAP(() => {
+    const textEl = textRef.current;
+    if (!textEl) return;
+
+    const split = new SplitText(textEl, {
+      type: "words",
+      wordsClass: "about-word",
+    });
+
+    wordsRef.current = split.words;
+
+    // Start all words dim
+    gsap.set(split.words, { color: "rgba(255,255,255,0.12)" });
+
+    // Register our progress handler with the parent
+    onRegister?.((progress: number) => {
+      const words = wordsRef.current;
+      if (!words.length) return;
+
+      words.forEach((word, i) => {
+        // Each word fades in across a small window of progress.
+        // Overlap of 1.5 makes adjacent words blend — flowing wave feel.
+        const start       = i / words.length;
+        const end         = Math.min((i + 1.5) / words.length, 1.0);
+        const wordProgress = gsap.utils.clamp(0, 1, (progress - start) / (end - start));
+        const alpha        = gsap.utils.interpolate(0.12, 0.95, wordProgress);
+        (word as HTMLElement).style.color = `rgba(255,255,255,${alpha.toFixed(3)})`;
+      });
+    });
+  }, { scope: panelRef });
+
+  return (
+    <div
+      ref={panelRef}
+      className="relative flex-shrink-0 w-screen h-screen flex flex-col justify-center items-center px-20"
+      style={{ background: "#0a0a0a" }}
+    >
+      <span
+        className="absolute top-10 left-12 text-xs tracking-[0.3em] uppercase"
+        style={{ color: "rgba(255,255,255,0.25)" }}
+      >
         About
       </span>
 
-      {/* Eyebrow */}
-      <p className="text-xs tracking-[0.3em] uppercase"
-        style={{ color: "rgba(255,255,255,0.35)" }}>
-        Who we are
-      </p>
-
-      {/* Heading */}
-      <h2 className="font-bold leading-none tracking-tighter"
-        style={{ fontSize: "clamp(3rem,9vw,9rem)", color: "rgba(255,255,255,0.9)" }}>
-        Closing<br />the loop.
-      </h2>
-
-      {/* Divider */}
-      <div className="w-16 h-px" style={{ background: "rgba(255,255,255,0.15)" }} />
-
-      {/* Body */}
-      <p className="max-w-md text-sm leading-relaxed"
-        style={{ color: "rgba(255,255,255,0.4)" }}>
-        Ecoloop is a platform built around the idea that sustainability
-        isn't a sacrifice — it's a smarter way to live. We connect people,
-        products, and processes to reduce waste at every step.
+      <p
+        ref={textRef}
+        className="text-center font-bold leading-tight max-w-4xl"
+        style={{
+          fontSize: "clamp(1.5rem, 3.5vw, 3.5rem)",
+          fontFamily: "var(--font-lk)",
+        }}
+      >
+        {aboutText}
       </p>
     </div>
   );
