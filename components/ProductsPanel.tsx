@@ -16,19 +16,19 @@ export default function ProductsPanel() {
     <div
       ref={containerRef}
       className="relative flex-shrink-0 h-screen flex items-center justify-center overflow-hidden"
-      style={{ width: "100vw", background: "#ffffff" }}
+      style={{ width: "100vw", background: "var(--base-100)" }}
     >
 
       
       {/* ── Content ───────────────────────────────────────────────────── */}
       <div className="z-10 text-center">
         <h2 
-          className="text-6xl md:text-8xl font-bold tracking-tighter uppercase text-black mb-6"
+          className="text-6xl md:text-8xl font-bold tracking-tighter uppercase text-base-400 mb-6"
           style={{ fontFamily: "var(--font-lk, sans-serif)" }}
         >
           Our Products
         </h2>
-        <p className="text-gray-600 text-xl max-w-2xl mx-auto px-6 font-primary">
+        <p className="text-base-300 text-xl max-w-2xl mx-auto px-6 font-primary">
           Closing the loop with sustainable solutions for every sector.
         </p>
       </div>

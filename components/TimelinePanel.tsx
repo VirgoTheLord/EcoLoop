@@ -52,7 +52,7 @@ export default function TimelinePanel({ onRegister }: Props) {
 
   // Config
   const ITEM_WIDTH = 45; // vw
-  const START_PAD  = 20;  // vw - leads into first item
+  const START_PAD  = 40;  // vw - leads into first item
   const END_PAD    = 10;  // vw
 
   useGSAP(() => {
@@ -133,26 +133,41 @@ export default function TimelinePanel({ onRegister }: Props) {
   return (
     <div
       ref={panelRef}
-      className="timeline-panel relative flex-shrink-0 h-screen font-sans"
+      className="timeline-panel relative flex-shrink-0 h-screen font-sans  "
       style={{ 
-          width: `${START_PAD + (ENTRIES.length * ITEM_WIDTH) + END_PAD}vw`, 
-          background: "#0a0a0a" 
+          width: `${START_PAD + (ENTRIES.length * ITEM_WIDTH) + END_PAD+ 20}vw`, 
+          background: "var(--base-400)" 
       }}
     >
       {/* ── Label (Pinned) ────────────────────────────────────────────── */}
       <span
         ref={labelRef}
         className="absolute top-10 left-12 text-xs tracking-[0.3em] uppercase z-20 will-change-transform"
-        style={{ color: "rgba(255,255,255,0.25)" }}
+        style={{ color: "var(--base-200)" }}
       >
         Timeline
       </span>
+
+      {/* ── Intro Title (Static) ──────────────────────────────────────── */}
+      <div 
+        className="absolute top-0 left-0 h-full z-10 pl-[5vw] flex flex-col justify-center"
+        style={{ width: `30vw`, padding:'3vw' }} // Fills space before SVG starts (at 30vw)
+      >
+        <h2 
+            className="text-[4vw] font-bold text-base-100 leading-none uppercase tracking-tighter flex flex-col items-start"
+            style={{ fontFamily: "var(--font-lk, sans-serif)" }}
+        >
+            <span>How</span>
+            <span>it all</span>
+            <span>started</span>
+        </h2>
+      </div>
 
       {/* ── SVG Layer ─────────────────────────────────────────────────── */}
       <svg
         className="absolute top-0 pointer-events-none z-0"
         style={{ 
-            left: `10vw`, // Start line 20vw from left edge
+            left: `25vw`, // Start line 20vw from left edge
             width: `${(START_PAD + (ENTRIES.length * ITEM_WIDTH) + END_PAD) - 25}vw`, 
             height: "100%" 
         }}
@@ -164,15 +179,15 @@ export default function TimelinePanel({ onRegister }: Props) {
           x2="100%"
           y2="50%"
           fill="none"
-          stroke="rgba(255,255,255,0.6)"
+          stroke="var(--base-200)"
           strokeWidth="1.5"
         />
         <circle
           ref={tipRef}
           r="4"
-          fill="#fff"
+          fill="var(--base-100)"
           opacity="0"
-          style={{ filter: "drop-shadow(0 0 8px rgba(255,255,255,0.8))" }}
+          style={{ filter: "drop-shadow(0 0 8px rgba(239, 245, 210, 0.8))" }}
         />
       </svg>
 
@@ -195,7 +210,7 @@ export default function TimelinePanel({ onRegister }: Props) {
           >
             {/* Vertical drop/rise line */}
             <div 
-              className="absolute bg-white/20"
+              className="absolute bg-base-200"
               style={{
                  top: isEven ? "50vh" : "auto", 
                  bottom: isEven ? "auto" : "50vh",
@@ -244,7 +259,7 @@ export default function TimelinePanel({ onRegister }: Props) {
                         fontSize:      "4rem",
                         fontFamily:    "var(--font-lk, sans-serif)",
                         fontWeight:    700,
-                        color:         "#fff",
+                        color:         "var(--base-100)",
                         lineHeight:    1,
                         marginBottom:  "0.5rem",
                       }}
@@ -257,7 +272,7 @@ export default function TimelinePanel({ onRegister }: Props) {
                         fontSize:      "1.1rem",
                         textTransform: "uppercase",
                         letterSpacing: "0.1em",
-                        color:         "rgba(255,255,255,0.6)",
+                        color:         "var(--base-200)",
                         marginBottom:  "0.5rem", 
                       }}
                     >
@@ -268,7 +283,8 @@ export default function TimelinePanel({ onRegister }: Props) {
                         fontFamily: "var(--font-host-grotesk, sans-serif)",
                         fontSize:   "0.95rem",
                         lineHeight: 1.6,
-                        color:      "rgba(255,255,255,0.4)",
+                        color:      "var(--base-100)",
+                        opacity:    0.8,
                         maxWidth:   "35ch",
                         marginBottom: "1rem",
                       }}
@@ -285,7 +301,7 @@ export default function TimelinePanel({ onRegister }: Props) {
                       fontSize:      "4rem",
                       fontFamily:    "var(--font-lk, sans-serif)",
                       fontWeight:    700,
-                      color:         "#fff",
+                      color:         "var(--base-100)",
                       lineHeight:    1,
                       marginBottom:  "0.5rem",
                     }}
@@ -298,7 +314,7 @@ export default function TimelinePanel({ onRegister }: Props) {
                       fontSize:      "1.1rem",
                       textTransform: "uppercase",
                       letterSpacing: "0.1em",
-                      color:         "rgba(255,255,255,0.6)",
+                      color:         "var(--base-200)",
                       marginBottom:  "1rem",
                     }}
                   >
@@ -309,7 +325,8 @@ export default function TimelinePanel({ onRegister }: Props) {
                       fontFamily: "var(--font-host-grotesk, sans-serif)",
                       fontSize:   "0.95rem",
                       lineHeight: 1.6,
-                      color:      "rgba(255,255,255,0.4)",
+                      color:      "var(--base-100)",
+                      opacity:    0.8,
                       maxWidth:   "35ch",
                     }}
                   >

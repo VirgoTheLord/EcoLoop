@@ -1,18 +1,21 @@
 @import "tailwindcss";
 
 @theme {
-  --color-base-100: #fff;
-  --color-base-200: #3a3a3a;
-  --color-base-300: #000;
+  --color-base-100: #EFF5D2;
+  --color-base-200: #C6D870;
+  --color-base-300: #8FA31E;
+  --color-base-400: #556B2F;
   
   --font-host-grotesk: var(--font-host-grotesk);
   --font-lk: var(--font-lk);
+  --font-drum: var(--font-drum);
 }
 
 :root {
-  --base-100: #fff;
-  --base-200: #3a3a3a;
-  --base-300: #000;
+  --base-100: #EFF5D2;
+  --base-200: #C6D870;
+  --base-300: #8FA31E;
+  --base-400: #556B2F;
 }
 
 /* CSS Reset */
@@ -28,7 +31,7 @@ html, body {
 }
 
 body {
-  background-color: var(--base-300);
+  background-color: var(--base-400);
   color: var(--base-100);
   font-family: var(--font-host-grotesk), sans-serif;
 }
