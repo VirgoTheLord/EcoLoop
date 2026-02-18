@@ -45,7 +45,7 @@ interface Props {
 
 export default function TimelinePanel({ onRegister }: Props) {
   const panelRef   = useRef<HTMLDivElement>(null);
-  const lineRef    = useRef<SVGLineElement>(null);
+  const pathRef    = useRef<SVGPathElement>(null);
   const tipRef     = useRef<SVGCircleElement>(null);
   const labelRef   = useRef<HTMLSpanElement>(null);
   const entriesRef = useRef<HTMLDivElement[]>([]);
@@ -56,11 +56,11 @@ export default function TimelinePanel({ onRegister }: Props) {
   const END_PAD    = 10;  // vw
 
   useGSAP(() => {
-    const line  = lineRef.current;
+    const path  = pathRef.current;
     const tip   = tipRef.current;
     const label = labelRef.current;
 
-    if (!line) return;
+    if (!path) return;
 
     onRegister?.((progress: number) => {
       const vw = window.innerWidth;
@@ -75,8 +75,51 @@ export default function TimelinePanel({ onRegister }: Props) {
       // If SVG Width is (Total - 25), that is the length of the line.
       const lineLenVw   = (START_PAD + (count * ITEM_WIDTH) + END_PAD) - 26;
       const totalLen    = vw * (lineLenVw / 100); 
+
+      // Scribble Logic
+      // Center Y relative to the SVG container? 
+      // The SVG is height: 100%, top: 0. So y=50% is center.
+      const cy = window.innerHeight / 2;
       
-      line.style.strokeDasharray = `${totalLen}`;
+      // A fun "scribble" start. Relative to (0, cy).
+      // Let's definition loops:
+      // M 0 cy  -> Start
+      // c 30 -50 60 50 90 0 -> first wave
+      // c 30 -60 -20 -60 0 0 -> loop back type thing?
+      // Let's try explicit coordinates for a nice logical Loop-de-loop.
+      // 1. Start 0,0
+      // 2. Loop Up-Right: (50, -60)
+      // 3. Loop Down-Left (crosses): (30, 40)
+      // 4. Loop Up-Right again: (100, -30)
+      // 5. Land straight: (150, 0)
+      
+      // Constructing Path D:
+      // We will perform string concatenation.
+      // Coordinates are "dx dy" relative if we use lowercase 'c' or 's', 
+      // but absolute 'C' is easier if we calculate offsets.
+      // Let's use relative 'c' logic for the scribble, starting from M 0 cy.
+      
+      // Loop 1: big starting coil
+      // c 40 -100, 80 80, 120 0 
+      // Loop 2: smaller coil
+      // c 40 -60, 40 60, 80 0
+      
+      // "Luxury Signature" Flourish
+      // We want a big, smooth, cursive-style loop that feels elegant.
+      // 350px width reserved for the flourish.
+      
+      const d = `
+        M 0 ${cy}
+        C 120 ${cy - 120}, 220 ${cy + 100}, 140 ${cy + 40}
+        C 60 ${cy - 20}, 180 ${cy - 150}, 280 ${cy}
+        S 360 ${cy}, 400 ${cy}
+        L ${totalLen} ${cy}
+      `;
+      
+      path.setAttribute("d", d);
+      
+      const len = path.getTotalLength();
+      path.style.strokeDasharray = `${len}`;
 
       /* 2. Pin Label */
       // Scrollable distance = (count * ITEM_WIDTH) + START_PAD + END_PAD + 20 - 100 [vw]
@@ -91,15 +134,17 @@ export default function TimelinePanel({ onRegister }: Props) {
       const range      = lineEndP - lineStartP;
       
       const drawProgress = gsap.utils.clamp(0, 1, (progress - lineStartP) / range); 
-      const offset = totalLen * (1 - drawProgress);
-      line.style.strokeDashoffset = `${offset}`;
+      const offset = len * (1 - drawProgress);
+      path.style.strokeDashoffset = `${offset}`;
 
       /* 4. Tip Position */
       if (tip) {
-        const x = totalLen * drawProgress;
-        if (x <= totalLen) {
-            tip.setAttribute("cx", `${x}`);
-            tip.setAttribute("cy", `${window.innerHeight * 0.5}`);
+        // Use getPointAtLength for exact tracking
+        const point = path.getPointAtLength(len * drawProgress);
+        
+        if (drawProgress <= 1) {
+            tip.setAttribute("cx", `${point.x}`);
+            tip.setAttribute("cy", `${point.y}`);
             // Keep tip visible at the end
             tip.style.opacity = drawProgress > 0.01 ? "1" : "0";
         }
@@ -172,12 +217,8 @@ export default function TimelinePanel({ onRegister }: Props) {
             height: "100%" 
         }}
       >
-        <line
-          ref={lineRef}
-          x1="0"
-          y1="50%"
-          x2="100%"
-          y2="50%"
+        <path
+          ref={pathRef}
           fill="none"
           stroke="var(--base-200)"
           strokeWidth="1.5"
