@@ -13,6 +13,9 @@ export default function Hero() {
 
   useGSAP(
     () => {
+      // Lock scroll during preloader
+      document.body.style.overflow = "hidden";
+
       // Create custom ease
       CustomEase.create("hop", "0.9,0,0.1,1");
 
@@ -88,7 +91,14 @@ export default function Hero() {
       if (headerSplit)  tl.to(headerSplit.chars,  { x: "0%", duration: 1, ease: "power4.out", stagger: 0.075 }, 7);
       if (navLogoSplit) tl.to(navLogoSplit.words, { y: "0%", duration: 1, ease: "power4.out" }, 7.5);
       if (navSplit)     tl.to(navSplit.words,     { y: "0%", duration: 1, ease: "power4.out", stagger: 0.075 }, 7.5);
-      if (footerSplit)  tl.to(footerSplit.words,  { y: "0%", duration: 1, ease: "power4.out", stagger: 0.075 }, 7.5);
+      if (footerSplit)  tl.to(footerSplit.words,  { y: "0%", duration: 1, ease: "power4.out", stagger: 0.075, onComplete: () => {
+        document.body.style.overflow = "";
+      }}, 7.5);
+
+      // Fallback: always unlock scroll when timeline ends (covers edge cases)
+      tl.eventCallback("onComplete", () => {
+        document.body.style.overflow = "";
+      });
 
       return () => {
         headerSplit?.revert();
