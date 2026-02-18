@@ -46,14 +46,13 @@ export default function RootLayout({
       <body
         className={`${hostGrotesk.variable} ${spaceGrotesk.variable} ${lk.variable} ${db.variable} ${drum.variable} antialiased`}
       >
-        <SmoothScroll>
+  
             {/* Runs synchronously before React hydrates — resets scroll before browser can restore it */}
             <script dangerouslySetInnerHTML={{ __html: `
             if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
             window.scrollTo(0, 0);
             `}} />
             {children}
-        </SmoothScroll>
       </body>
     </html>
   );

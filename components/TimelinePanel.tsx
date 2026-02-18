@@ -52,7 +52,7 @@ export default function TimelinePanel({ onRegister }: Props) {
 
   // Config
   const ITEM_WIDTH = 45; // vw
-  const START_PAD  = 40;  // vw - leads into first item
+  const START_PAD  = 65;  // vw - leads into first item
   const END_PAD    = 10;  // vw
 
   useGSAP(() => {
@@ -79,8 +79,8 @@ export default function TimelinePanel({ onRegister }: Props) {
       line.style.strokeDasharray = `${totalLen}`;
 
       /* 2. Pin Label */
-      // Scrollable distance = (count * ITEM_WIDTH) - 100 [vw]
-      const scrollableWidthVw = (START_PAD + (count * ITEM_WIDTH) + END_PAD) - 100;
+      // Scrollable distance = (count * ITEM_WIDTH) + START_PAD + END_PAD + 20 - 100 [vw]
+      const scrollableWidthVw = (START_PAD + (count * ITEM_WIDTH) + END_PAD + 20) - 100;
       if (label) {
         label.style.transform = `translateX(${progress * scrollableWidthVw}vw)`;
       }
@@ -136,7 +136,7 @@ export default function TimelinePanel({ onRegister }: Props) {
       className="timeline-panel relative flex-shrink-0 h-screen font-sans  "
       style={{ 
           width: `${START_PAD + (ENTRIES.length * ITEM_WIDTH) + END_PAD+ 20}vw`, 
-          background: "var(--base-400)" 
+          background: "var(--base-500)" 
       }}
     >
       {/* ── Label (Pinned) ────────────────────────────────────────────── */}
@@ -154,7 +154,7 @@ export default function TimelinePanel({ onRegister }: Props) {
         style={{ width: `30vw`, padding:'3vw' }} // Fills space before SVG starts (at 30vw)
       >
         <h2 
-            className="text-[4vw] font-bold text-base-100 leading-none uppercase tracking-tighter flex flex-col items-start"
+            className="text-[8vw] font-bold text-base-100 leading-none uppercase flex flex-col items-start"
             style={{ fontFamily: "var(--font-lk, sans-serif)" }}
         >
             <span>How</span>

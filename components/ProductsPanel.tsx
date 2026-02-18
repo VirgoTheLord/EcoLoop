@@ -23,7 +23,7 @@ export default function ProductsPanel() {
       {/* ── Content ───────────────────────────────────────────────────── */}
       <div className="z-10 text-center">
         <h2 
-          className="text-6xl md:text-8xl font-bold tracking-tighter uppercase text-base-400 mb-6"
+          className="text-6xl md:text-8xl font-bold tracking-tighter uppercase text-base-500 mb-6"
           style={{ fontFamily: "var(--font-lk, sans-serif)" }}
         >
           Our Products

@@ -137,7 +137,7 @@ export default function Hero() {
         {/* Hero Background */}
         <div className="hero-bg absolute top-0 left-0 w-full h-full will-change-[clip-path] z-[-1] [clip-path:polygon(50%_50%,50%_50%,50%_50%,50%_50%)]">
           <img
-            src="/13.png"
+            src="/hero.jpg"
             alt="Hero"
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 scale-[2] will-change-transform"
           />
