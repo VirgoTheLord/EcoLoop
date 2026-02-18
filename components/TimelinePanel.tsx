@@ -200,11 +200,11 @@ export default function TimelinePanel({ onRegister }: Props) {
       >
         <h2 
             className="text-[8vw] font-bold text-base-100 leading-none uppercase flex flex-col items-start"
-            style={{ fontFamily: "var(--font-lk, sans-serif)" }}
+            style={{ fontFamily: "var(--font-rostex, sans-serif)" }}
         >
             <span>How</span>
             <span>it all</span>
-            <span>started</span>
+            <span>started.</span>
         </h2>
       </div>
 

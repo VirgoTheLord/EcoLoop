@@ -24,9 +24,9 @@ export default function ProductsPanel() {
       <div className="z-10 text-center">
         <h2 
           className="text-6xl md:text-8xl font-bold tracking-tighter uppercase text-base-500 mb-6"
-          style={{ fontFamily: "var(--font-lk, sans-serif)" }}
+          style={{ fontFamily: "var(--font-rostex, sans-serif)" }}
         >
-          Our Products
+          Our<br/> Products
         </h2>
         <p className="text-base-300 text-xl max-w-2xl mx-auto px-6 font-primary">
           Closing the loop with sustainable solutions for every sector.

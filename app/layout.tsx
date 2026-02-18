@@ -20,14 +20,14 @@ const lk = localFont({
   src: "./fonts/LK_Ternima-Regular.ttf"
 })
 
-const db = localFont({
-  variable: "--font-db",
-  src: "./fonts/20db.otf"
+const rostex = localFont({
+  variable: "--font-rostex",
+  src: "./fonts/Rostex-Regular.ttf"
 })
 
-const drum = localFont({
-  variable: "--font-drum",
-  src: "./fonts/DRUMSN__.ttf"
+const spacearmor = localFont({
+  variable: "--font-spacearmor",
+  src: "./fonts/SPACE ARMOR.otf"
 })
 
 
@@ -44,7 +44,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${hostGrotesk.variable} ${spaceGrotesk.variable} ${lk.variable} ${db.variable} ${drum.variable} antialiased`}
+        className={`${hostGrotesk.variable} ${spaceGrotesk.variable} ${lk.variable} ${rostex.variable} ${spacearmor.variable} antialiased`}
       >
   
             {/* Runs synchronously before React hydrates — resets scroll before browser can restore it */}

@@ -76,7 +76,7 @@ export default function AboutPanel({ onRegister }: Props) {
         className="text-center font-bold leading-tight max-w-4xl"
         style={{
           fontSize: "clamp(1.5rem, 3.5vw, 3.5rem)",
-          fontFamily: "var(--font-lk)",
+          fontFamily: "var(--font-rostex)",
         }}
       >
         {aboutText}

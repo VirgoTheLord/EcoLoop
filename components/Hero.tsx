@@ -145,7 +145,7 @@ export default function Hero() {
 
         {/* Header */}
         <div className="header absolute bottom-16 w-full px-8">
-          <h1 className="main text-[clamp(4rem,18vw,14rem)] max-[1000px]:text-[3.5rem]">
+          <h1 className="main text-[clamp(4rem,13.5vw,12.5rem)] max-[1000px]:text-[3.5rem]">
             Ecoloop
           </h1>
         </div>
