@@ -3,8 +3,6 @@ import localFont from "next/font/local"
 import { Host_Grotesk, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 
-import SmoothScroll from "@/components/SmoothScroll";
-
 const hostGrotesk = Host_Grotesk({
   variable: "--font-host-grotesk",
   subsets: ["latin"],
